@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+   <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+    <body style='tect-align:center'>
+    <h1 id='header'>
+        My New App!
+    </h1>
+    <div id='loginRegisterWrapper' class='container card'>
+      <div class="col s12">
+       <ul class="tabs" id='loginTabs'>
+        <li class="tab col s3"><a class="active" href="#loginSection">Login</a></li>
+        <li class="tab col s3"><a href="#registerSection">Register</a></li>
+       </ul>
+      </div>
+      <div id='loginSection'>
+        <div class="row">
+              <div class="input-field col s12">
+                <input id="email" type="email" class="validate">
+                <label for="email">Email</label>
+                <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
+              </div>
+        </div>
+        <div class="row">
+              <div class="input-field col s12">
+                <input id="password" type="password" class="validate">
+                <label for="password" class="">Password</label>
+              </div>
+         </div>
+      </div>
+      <div id='registerSection'>
+      </div>
+    </div>
+    
+    <div id='authorizedArea'>
+    <h1 id='accountStatus'> </h1>  
+    <button onclick='logout()'> </button>
+    </div>
+    </body>
+            
+</html>
