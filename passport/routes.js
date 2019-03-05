@@ -3,7 +3,6 @@ var url = require("url"),
 	querystring = require("querystring");
 var User       = require('./models/user');
 module.exports = function(app, passport) {
-
     app.get('/loginStatus', function(req, res) {
       if (req.isAuthenticated())
         res.send(JSON.stringify(req.user));
@@ -16,27 +15,18 @@ module.exports = function(app, passport) {
         res.redirect('/');
     });
 
-        app.post('/loginUser', passport.authenticate('local-login', {
-            successRedirect : '/index.html', // redirect to the secure profile section
-            failureRedirect : '/login.html#fail', // redirect back to the signup page if there is an error
-            failureFlash : true // allow flash messages
-        }));
+    app.post('/tryLogin', passport.authenticate('local-login', {
+        successRedirect : '/index.html', // redirect to the secure profile section
+        failureRedirect : '/login.html#fail', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+    }));
 
-
-app.get('/loginFailure', function(req, res, next) {
-  res.send('0');
-});
-
-app.get('/loginSuccess', function(req, res, next) {
-  res.send('1');
-});
-
-        // process the signup form
-        app.post('/signup', passport.authenticate('local-signup', {
-            successRedirect : '/index.html', // redirect to the secure profile section
-            failureRedirect : '/signup.html#fail', // redirect back to the signup page if there is an error
-            failureFlash : true // allow flash messages
-        }));
+    // process the signup form
+    app.post('/tryRegister', passport.authenticate('local-signup', {
+        successRedirect : '/index.html', // redirect to the secure profile section
+        failureRedirect : '/login.html#failReg', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+    }));
 
   app.get('/changepass', isLoggedIn, function (req, res) {
     var incoming = url.parse(req.url).query;
@@ -107,19 +97,6 @@ app.get('/loginSuccess', function(req, res, next) {
       }
     });
   });
-
-
-    app.get('/isUserLoggedIn', isLoggedIn, function(req, res) {
-      var keys = Object.keys(req);
-      if(req.isAuthenticated() && keys.indexOf("user") >= 0){
-        res.send(req.user);
-      }
-      else{
-        res.send("0");
-      }
-    });
-
-
 };
 
 // route middleware to ensure user is logged in

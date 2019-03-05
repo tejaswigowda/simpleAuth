@@ -26,7 +26,7 @@ app.use(session( {store: new MongoStore({
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(require("connect-flash")()); // use connect-flash for flash messages stored in session
 
 var mongoose = require('mongoose');
 var configDB = require('./passport/config/database.js');
@@ -39,8 +39,12 @@ require('./passport/config/passport')(passport); // pass passport for configurat
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next();
-
     res.send('noauth');
 }
+
+app.get("/", function(req, res){
+ // res.sendFile(__dirname+"/public/index.html")
+  res.redirect("index.html")
+})
 
 app.listen(8080);

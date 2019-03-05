@@ -1,86 +1,21 @@
 <!doctype html>
 <html>
-  <head>
-  <meta content="width=device-width, initial-scale=1, max-width=device-width, max-scale=1" name="viewport">
-   <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<head>
+  <meta content="width=device-width, initial-scale=1, maximum-width=device-width, maximum-scale=1" name="viewport">
+  <script src='asyncReq.js'></script>
+<script>
+var main = function(){
+  loadFile("/loginStatus", function(data){
+    if(data === "0"){
+      window.location.href='./login.html'
+      return;
+    }
 
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-      
-      var start = function(){
-          $("#loginRegisterWrapper").fadeIn();
-          M.Tabs.init(document.getElementById("loginTabs"), {});
-      }
-    </script>
-  </head>
-    <body onload='start()'>
-    <h1 id='header' style='margin-bottom:50px;text-align:center'>
-        My App!
-    </h1>
-        
 
-    <div style='margin:auto; max-width:400px;display:none' id='loginRegisterWrapper' class='container card'>
-      <div class="col s12">
-       <ul class="tabs" id='loginTabs' style='text-align:center'>
-        <li class="tab col s3"><a class="active" href="#loginSection">Login</a></li>
-        <li class="tab col s3"><a href="#registerSection">Register</a></li>
-       </ul>
-      </div>
-      <div id='loginSection' style='padding-bottom:10px;'>
-        <div class="row">
-              <div class="input-field col s12">
-                <input id="email" type="email" class="validate">
-                <label for="email">Email</label>
-                <span class="helper-text" data-error="wrong" data-success="right"></span>
-              </div>
-        </div>
-        <div class="row">
-              <div class="input-field col s12">
-                <input id="password" type="password" class="validate">
-                <label for="password" class="">Password</label>
-                <span class="helper-text" data-error="wrong" data-success="right"></span>
-              </div>
-         </div>
-          <button class="btn waves-effect waves-light" onclick="loginNow()" name="action" style='margin:auto;display: block;margin-bottom:30px'>Login
-              <i class="material-icons right">arrow_forward</i>
-          </button>
-      </div>
-      <div id='registerSection' style='padding-bottom:10px;'>
-        <div class="row">
-              <div class="input-field col s12">
-                <input id="emailR" type="email" class="validate">
-                <label for="emailR">Email</label>
-                <span class="helper-text" data-error="wrong" data-success="right"></span>
-              </div>
-        </div>
-        <div class="row">
-              <div class="input-field col s12">
-                <input id="passwordR1" type="password" class="validate">
-                <label for="passwordR1" class="">Password</label>
-                <span class="helper-text" data-error="wrong" data-success="right"></span>
-              </div>
-         </div>
-        <div class="row">
-              <div class="input-field col s12">
-                <input id="passwordR2" type="password" class="validate">
-                <label for="passwordR2" class="">Retype Password</label>
-                <span class="helper-text" data-error="wrong" data-success="right"></span>
-              </div>
-         </div>
-          <button class="btn waves-effect waves-light" onclick="registerNow()" name="action" style='margin:auto;display: block;margin-bottom:30px'>Register
-              <i class="material-icons left">assignment_ind</i>
-          </button>
-      </div>
-    </div>
-    
-    <div id='authorizedArea'>
-    <h1 id='accountStatus'> </h1>  
-    <button onclick='logout()'> </button>
-    </div>
-    </body>
-            
+  });               
+}
+</script>
+</head>
+<body onload='main()'>
+</body>
 </html>
