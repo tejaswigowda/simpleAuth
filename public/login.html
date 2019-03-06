@@ -62,28 +62,28 @@
                 <span class="helper-text" data-error="wrong" data-success="right"></span>
               </div>
          </div>
-          <button stype='submit' class="btn waves-effect waves-light" onclick="loginNow()" name="action" style='margin:auto;display: block;margin-bottom:30px'>Login
+          <button type='submit' class="btn waves-effect waves-light"  name="action" style='margin:auto;display: block;margin-bottom:30px'>Login
               <i class="material-icons right">arrow_forward</i>
           </button>
         </form>
       </div>
       <div id='registerSection' style='padding-bottom:10px;'>
-       <form name='register' action="tryRegister" method="post">
+       <form name='register' action="/tryRegister" method="post">
         <div class="row">
               <div class="input-field col s12">
-                <input id="emailR" type="email" class="validate">
+                <input id="emailR" type="email" name='emailR'  class="validate">
                 <label for="emailR">Email</label>
                 <span class="helper-text" data-error="wrong" data-success="right"></span>
               </div>
-        </div>
+         </div>
         <div class="row">
               <div class="input-field col s12">
-                <input id="passwordR" type="password" class="validate" data-length="10">
+                <input id="passwordR" type="password" name='passwordR' class="validate" data-length="10">
                 <label for="passwordR" class="">Password</label>
                 <span class="helper-text" data-error="Password needs to be atleast 5 charecters" data-success="Valid Password"></span>
               </div>
          </div>
-          <button id='registerButton' class="btn waves-effect waves-light" type='submit'  name="action" style='margin:auto;display:block;margin-bottom:30px'>Register
+          <button id='registerButton' class="btn waves-effect waves-light" type='submit'  style='margin:auto;display:block;margin-bottom:30px'>Register
               <i class="material-icons left">assignment_ind</i>
           </button>
         </form>

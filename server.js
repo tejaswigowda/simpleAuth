@@ -1,50 +1,57 @@
 var url = require("url"),
 	querystring = require("querystring");
-var mongoose = require('morgan');
+
 var passport = require('passport');
-var flash    = require('connect-flash');
 var fs = require('fs');
 var path = require('path'),
-express = require('express');
-var bodyParser = require('body-parser');
-var errorHandler = require('errorhandler');
-var methodOverride = require('method-override');
-var app = express();
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
+  express = require('express'),
+  db = require('mongoskin').db('mongodb://127.0.0.1:27017/test');
 
-
-var secret = 'mySecretCode' + new Date().getTime().toString()
-app.use(bodyParser({limit:'15mb'}));
-app.use(methodOverride());
-app.use(require("cookie-parser")(secret));
-
-app.use(session( {store: new MongoStore({
-  url: 'mongodb://127.0.0.1:27017/test',
-  secret: secret
-})}));
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(require("connect-flash")()); // use connect-flash for flash messages stored in session
 
 var mongoose = require('mongoose');
 var configDB = require('./passport/config/database.js');
 mongoose.connect(configDB.url); // connect to our database
 
-require('./passport/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+var app = express();
+var secret = 'test' + new Date().getTime().toString()
+
+var session = require('express-session');
+app.use(passport.initialize());
+var MongoStore = require('connect-mongo')(session);
+var flash = require('express-flash');
+app.use(require("cookie-parser")(secret));
+app.use(session( {store: new MongoStore({
+   url: 'mongodb://127.0.0.1:27017/test',
+   secret: secret
+})}));
+app.use( flash() );      
+
+var bodyParser = require("body-parser");
+var methodOverride = require("method-override");
+
+app.use(methodOverride());
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended:false 
+}));
 require('./passport/config/passport')(passport); // pass passport for configuration
+require('./passport/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.listen(8080);
+
+
+
 
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
         return next();
+
     res.send('noauth');
 }
 
-app.get("/", function(req, res){
- // res.sendFile(__dirname+"/public/index.html")
-  res.redirect("index.html")
-})
 
-app.listen(8080);

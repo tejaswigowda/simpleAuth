@@ -71,11 +71,14 @@ module.exports = function(passport) {
     // =========================================================================
     passport.use('local-signup', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
-        usernameField : 'email',
-        passwordField : 'password',
+        usernameField : 'emailR',
+        passwordField : 'passwordR',
         passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
     },
     function(req, email, password, done) {
+      console.log(email,password);
+      console.log(req.body);
+      console.log(req.user);
         if (email)
             email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
 
@@ -92,6 +95,7 @@ module.exports = function(passport) {
                     if (user) {
                         return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
                     } else {
+                      console.log("here");
 
                         // create the user
                         var newUser            = new User();
@@ -104,6 +108,7 @@ module.exports = function(passport) {
                                 return done(err);
 
                             return done(null, newUser);
+
                         });
                     }
 
@@ -113,19 +118,24 @@ module.exports = function(passport) {
                 // ...presumably they're trying to connect a local account
                 // BUT let's check if the email used to connect a local account is being used by another user
                 User.findOne({ 'local.email' :  email }, function(err, user) {
-                    if (err)
+                    if (err){
+                        console.log(err);
                         return done(err);
-                    
+                    }
+
                     if (user) {
                         return done(null, false, req.flash('loginMessage', 'That email is already taken.'));
                         // Using 'loginMessage instead of signupMessage because it's used by /connect/local'
                     } else {
+console.log("here 2");
                         var user = req.user;
                         user.local.email = email;
                         user.local.password = user.generateHash(password);
                         user.save(function (err) {
                             if (err)
-                                return done(err);
+                              console.log(err);
+                              return done(err, false, { message: 'bad password' })
+                               // return done(err);
                             
                             return done(null,user);
                         });
@@ -393,3 +403,4 @@ passport.use(new OAuth2Strategy({
     }));
 
 };
+
