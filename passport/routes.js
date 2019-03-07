@@ -25,11 +25,6 @@ app.post('/tryLogin', passport.authenticate('local-login', {
     failureFlash : true // allow flash messages
 }));
 
-app.post('/tryLoginN', function(req,res){
-  console.log(req.body);
-});
-
-
 // process the signup form
 app.post('/tryRegister', passport.authenticate('local-signup', {
     successRedirect : '/index.html', // redirect to the secure profile section
