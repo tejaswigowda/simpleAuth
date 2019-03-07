@@ -12,6 +12,7 @@
     <script>
       
       var start = function(){
+        $('.modal').modal();
         $("#passwordR").on("keyup focusout", function (e) {
           if ($(this).val().length < 5) {
             $(this).removeClass("valid").addClass("invalid");
@@ -27,7 +28,18 @@
         var hash = window.location.hash.replace("#","")
         var eid = hash.split(",")[1] || "";
         var fail = hash.split(",")[0] || "";
-        if(fail === "fail"){
+        if(fail == "fail"){
+          $("#password").addClass("invalid");
+          if (eid != ""){
+            $("#email").val(eid);
+            $("#email").addClass("invalid");
+          }
+        }
+        if(fail === "failReg"){
+          var instance = M.Tabs.getInstance(document.getElementById("loginTabs"));
+          instance.select("registerSection");
+          instance = M.Modal.getInstance(document.getElementById("failReg"));
+          instance.open();
         }
         $("#registerButton").fadeOut();
       }
@@ -47,17 +59,17 @@
        </ul>
       </div>
       <div id='loginSection' style='padding-bottom:10px;'>
-       <form name='login' action="tryLogin" method="post">
+       <form name='login' action="/tryLogin" method="post">
         <div class="row">
               <div class="input-field col s12">
-                <input id="email" type="email" class="validate">
+                <input id="email" type="email" class="validate" name='email'>
                 <label for="email">Email</label>
                 <span class="helper-text" data-error="wrong" data-success="right"></span>
               </div>
         </div>
         <div class="row">
               <div class="input-field col s12">
-                <input id="password" type="password" class="validate">
+                <input id="password" type="password" name='password'  class="validate">
                 <label for="password" class="">Password</label>
                 <span class="helper-text" data-error="wrong" data-success="right"></span>
               </div>
@@ -90,10 +102,16 @@
       </div>
     </div>
     
-    <div id='authorizedArea'>
-    <h1 id='accountStatus'> </h1>  
-    <button onclick='logout()'> </button>
+      <!-- Modal Structure -->
+  <div id="failReg" class="modal">
+    <div class="modal-content">
+      <h4>Registration failed</h4>
+      <p>Please try again in a few minutes</p>
     </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+    </div>
+  </div>
     </body>
             
 </html>

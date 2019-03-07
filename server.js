@@ -16,14 +16,15 @@ var app = express();
 var secret = 'test' + new Date().getTime().toString()
 
 var session = require('express-session');
-app.use(passport.initialize());
-var MongoStore = require('connect-mongo')(session);
-var flash = require('express-flash');
 app.use(require("cookie-parser")(secret));
+var MongoStore = require('connect-mongo')(session);
 app.use(session( {store: new MongoStore({
    url: 'mongodb://127.0.0.1:27017/test',
    secret: secret
 })}));
+app.use(passport.initialize());
+app.use(passport.session());
+var flash = require('express-flash');
 app.use( flash() );      
 
 var bodyParser = require("body-parser");
