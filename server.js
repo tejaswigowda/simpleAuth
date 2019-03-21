@@ -1,16 +1,15 @@
 var url = require("url"),
 	querystring = require("querystring");
-
 var passport = require('passport');
 var fs = require('fs');
+var dbURL = 'mongodb://127.0.0.1:27017/test';
 var path = require('path'),
   express = require('express'),
-  db = require('mongoskin').db('mongodb://127.0.0.1:27017/test');
+  db = require('mongoskin').db();
 
 
 var mongoose = require('mongoose');
-var configDB = require('./passport/config/database.js');
-mongoose.connect(configDB.url); // connect to our database
+mongoose.connect(dbURL); // connect to our database
 
 var app = express();
 var secret = 'test' + new Date().getTime().toString()
@@ -19,7 +18,7 @@ var session = require('express-session');
 app.use(require("cookie-parser")(secret));
 var MongoStore = require('connect-mongo')(session);
 app.use(session( {store: new MongoStore({
-   url: 'mongodb://127.0.0.1:27017/test',
+   url: dbURL,
    secret: secret
 })}));
 app.use(passport.initialize());
