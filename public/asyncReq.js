@@ -1,26 +1,8 @@
-function getXMLHTTPRequest()
-{
-    var request;
-    // Lets try using ActiveX to instantiate the XMLHttpRequest object
-    try{
-        request = new ActiveXObject("Microsoft.XMLHTTP");
-    }catch(ex1){
-        try{
-            request = new ActiveXObject("Msxml2.XMLHTTP");
-        }catch(ex2){
-            request = null;
-        }
-    }
-
-    // If the previous didn't work, lets check if the browser natively support XMLHttpRequest 
-    if(!request && typeof XMLHttpRequest != "undefined"){
-        //The browser does, so lets instantiate the object
-        request = new XMLHttpRequest();
-    }
-
-    return request;
-}
-
+/*
+ * Make Asynchronous HTTP GET requests.
+ * filename --> URL (route) you want to request
+ * callback(data) --> gets called on response `data` that arrives
+*/
 
 function loadFile(filename, callback)
 {
@@ -47,3 +29,28 @@ function loadFile(filename, callback)
         alert("A problem occurred instantiating the XMLHttpRequest object.");
     }
 }
+
+function getXMLHTTPRequest()
+{
+    var request;
+    // Lets try using ActiveX to instantiate the XMLHttpRequest object
+    try{
+        request = new ActiveXObject("Microsoft.XMLHTTP");
+    }catch(ex1){
+        try{
+            request = new ActiveXObject("Msxml2.XMLHTTP");
+        }catch(ex2){
+            request = null;
+        }
+    }
+
+    // If the previous didn't work, lets check if the browser natively support XMLHttpRequest 
+    if(!request && typeof XMLHttpRequest != "undefined"){
+        //The browser does, so lets instantiate the object
+        request = new XMLHttpRequest();
+    }
+
+    return request;
+}
+
+

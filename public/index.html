@@ -5,6 +5,7 @@
   <script src='asyncReq.js'></script>
 <script>
 var main = function(){
+  // check whether user is logged in
   loadFile("/loginStatus", function(data){
     if(data === "0"){
       window.location.href='./login.html'
