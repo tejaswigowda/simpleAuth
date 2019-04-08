@@ -37,14 +37,8 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 require('./passport/config/passport')(passport); // pass passport for configuration
 require('./passport/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
-
 app.use(express.static(path.join(__dirname, 'public')));
-
-
 app.listen(8080);
-
-
-
 
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
@@ -53,5 +47,3 @@ function isLoggedIn(req, res, next) {
 
     res.send('noauth');
 }
-
-
