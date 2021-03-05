@@ -5,7 +5,7 @@ var fs = require('fs');
 var dbURL = 'mongodb://127.0.0.1:27017/test';
 var path = require('path'),
   express = require('express'),
-  db = require('mongoskin').db();
+  db = require('mongoskin').db(dbURL);
 
 
 var mongoose = require('mongoose');
@@ -36,6 +36,15 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 require('./passport/config/passport')(passport); // pass passport for configuration
 require('./passport/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
+
+app.get("/addProject", isLoggedIn, function(req,res){
+
+})
+
+app.get("/getProjects", function(req,res){
+
+})
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.listen(8080);
